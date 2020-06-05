@@ -8,6 +8,6 @@ Example:
 
 input:
 
-    ```
-    validate(55555555555)
-    ```
+```
+validate(55555555555)
+```
