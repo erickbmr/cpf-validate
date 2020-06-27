@@ -45,6 +45,28 @@ function intToArray(number)
     return cpfArray
 end
 
+function checkDigit(cpfArray, number, remainder, count)
+    
+    firstDigit = number - remainder
+
+        if firstDigit < 0
+            return false
+        end
+
+        if firstDigit > 9
+            if cpfArray[count] != 0
+                return false
+            end
+        end
+
+        if firstDigit != cpfArray[count]
+            return false
+        end
+ 
+    return true
+
+end
+
 function validate(number)
 
     if isa(number, Int64)
@@ -62,22 +84,10 @@ function validate(number)
         remainder = trunc(Int, round(firstSum % 11))
 
         #expected to be the first digit
-        firstDigit = 11 - remainder
-
-        if firstDigit < 0
+        if checkDigit(cpfArray, 11, remainder, count) == false
             return false
         end
-
-        if firstDigit > 9
-            if cpfArray[count] != 0
-                return false
-            end
-        end
-
-        if firstDigit != cpfArray[count]
-            return false
-        end
-        
+    
         #second sum of validation process
         secondSum = sum(count + 1, 2, cpfArray)
 
@@ -85,22 +95,10 @@ function validate(number)
         remainder = trunc(Int, round(secondSum % 11))
 
         #expected to be the second digit
-        secondDigit = 11 - remainder
-
-        if secondDigit < 0
+        if checkDigit(cpfArray, 11, remainder, count + 1) == false
             return false
         end
-
-        if secondDigit > 9
-            if cpfArray[count + 1] != 0
-                return false
-            end
-        end
-
-        if secondDigit != cpfArray[count + 1]
-            return false
-        end
-
+        
         #all operationd were performed and no invalidation occurred
         return true
 
